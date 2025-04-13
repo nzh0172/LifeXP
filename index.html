@@ -6,6 +6,51 @@
     <title>LifeXP</title>
 </head>
 <body>
-    
+  <div class="header">
+    <h1>Life XP</h1>
+    <div class="xp-box">🔷 <span>999</span> <button>+</button></div>
+  </div>
+
+  <div class="tasks">
+    <div class="main-task">
+      <span>🔶 Complete 'Scrolls of Wisdom'</span>
+      <span>✔️</span>
+    </div>
+
+    <div class="task-list">
+      <div class="task" onclick="showDetail()">
+        <div class="status">In Progress</div>
+        <div>Scrolls of Wisdom</div>
+        <div class="xp">+1000</div>
+      </div>
+      <div class="task">
+        <div>Sanity Run</div>
+        <div class="xp">+900</div>
+      </div>
+      <div class="task">
+        <div>Potion Brewing</div>
+        <div class="xp">+850</div>
+      </div>
+    </div>
+
+    <div class="task-detail" id="detailBox">
+      <h2>📖 Scrolls of Wisdom <span class="status">In Progress</span></h2>
+      <p><strong>Quest backstory:</strong></p>
+      <p>something</p>
+      <div class="detail-buttons">
+        <button class="giveup" onclick="hideDetail()">❌ Give Up</button>
+        <button class="complete">✅ Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showDetail() {
+      document.getElementById('detailBox').classList.add('active');
+    }
+    function hideDetail() {
+      document.getElementById('detailBox').classList.remove('active');
+    }
+  </script>
 </body>
 </html>
