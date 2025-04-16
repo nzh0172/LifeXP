@@ -117,8 +117,12 @@ const quests = [
     }
   ];
 
+  let currentQuestIndex = -1;
+
   function showDetail(index) {
-    const quest = quests[index];
+    currentQuestIndex = index;
+    //const quest = quests[index];
+    const quest = getQuests()[index]; // Use from storage to reflect current data
     const box = document.getElementById("detailBox");
   
     box.querySelector(".quest-title").textContent = `${quest.icon} ${quest.title}`;
@@ -126,15 +130,8 @@ const quests = [
     box.querySelector(".quest-objective").textContent = quest.objective;
     box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
-
-  
     box.classList.add("active");
     document.body.classList.add("detail-open");
-  }
-  
-  function hideDetail() {
-    document.getElementById("detailBox").classList.remove("active");
-    document.body.classList.remove("detail-open");
   }
   
   document.addEventListener("DOMContentLoaded", renderCards);
@@ -158,6 +155,57 @@ const quests = [
       container.appendChild(card);
     });
   }
+
+  // Save coin count to localStorage
+function saveXP(value) {
+  localStorage.setItem('totalXP', value);
+}
+
+// Get XP from localStorage
+function getXP() {
+  return parseInt(localStorage.getItem('totalXP')) || 0;
+}
+
+// Initialize XP
+let totalXP = getXP();
+
+// Update the coin UI
+function updateXPDisplay() {
+  document.getElementById("xp-amount").innerText = totalXP + " XP";
+}
+
+
+// Accept and complete a quest
+function acceptQuest(index) {
+  const quests = getQuests();
+  const reward = quests[index].reward;
+
+  totalXP += reward;
+  saveXP(totalXP);
+  updateXPDisplay();
+
+  quests[index].status = "Completed";
+  saveQuests(quests);
+  renderCards();
+
+  alert(`Quest completed! You earned ${reward} XP.`);
+}
+
+// On page load, initialize everything
+window.addEventListener("DOMContentLoaded", () => {
+  renderCards();
+  updateXPDisplay();
+});
+
+document.querySelector(".complete").addEventListener("click", function (){
+  const questTitle = document.querySelector(".quest-title").textContent.split(" ").slice(1).join(" ");
+  const quests = getQuests();
+  const index = quests.findIndex(q => q.title === questTitle);
+  if (index !== -1){
+    acceptQuest(index);
+    hideDetail();
+  }
+});
   
 
   

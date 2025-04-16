@@ -1,5 +1,5 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Macondo", cursive;
     background: #fdfdfd url('questbg2.png');
     margin: 0;
     padding: 0;
@@ -15,28 +15,42 @@ body {
     align-items: center;
   }
   .header h1 {
-    color: #a084ca;
+    color: #d2b5fe;
     padding-left: 0px;
     text-align: left;
     margin:0 150px;
     float: left;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Macondo", cursive;
 
   }
+
+  .logo {
+    font-family: "UnifrakturCook", cursive;
+    font-size: 2.5em;
+    color: #8659f5;
+    letter-spacing: 1px;
+  }
+  
   .xp-box {
-    background: #bce1ff;
+    background: #47d1ff;
     padding: 5px 10px;
     border-radius: 8px;
     font-weight: bold;
     display: flex;
     align-items: center;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: "Macondo", cursive;
   }
   .xp-box span {
     margin-left: 5px;
   }
   .xp-box button{
     margin-left: 5px;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
 
   .activequest-alert{
@@ -73,7 +87,12 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     background-color: #fff;
-   
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
   }
 
   .card img {
@@ -109,7 +128,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Macondo", cursive;
    
   }
 
