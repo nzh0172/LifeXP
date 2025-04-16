@@ -86,6 +86,82 @@ document.getElementById("outputPrompt").addEventListener("input", function () {
     }
 });
 
+// Sample quest data (replace with getQuests() if using localStorage)
+const quests = [
+    {
+      title: "Scrolls of Wisdom",
+      backstory: "You must study the ancient scrolls to gain forgotten knowledge.",
+      objective: "Read the scrolls in the library.",
+      reward: 1000,
+      icon: "📖",
+      status: "In Progress",
+
+    },
+    {
+      title: "Sanity Run",
+      backstory: "Run through the cursed woods before midnight to stay sane.",
+      objective: "Run through the woods before midnight.",
+      reward: 900,
+      icon: "🏃‍♀️",
+      status: "Not Started",
+
+    },
+    {
+      title: "Potion Brewing",
+      backstory: "Brew a potion strong enough to lift the villager's curse.",
+      objective: "Gather ingredients and brew the potion.",
+      reward: 850,
+      icon: "🔮",
+      status: "Not Started",
+
+    }
+  ];
+
+  function showDetail(index) {
+    const quest = quests[index];
+    const box = document.getElementById("detailBox");
+  
+    box.querySelector(".quest-title").textContent = `${quest.icon} ${quest.title}`;
+    box.querySelector(".quest-backstory").textContent = quest.backstory;
+    box.querySelector(".quest-objective").textContent = quest.objective;
+    box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
+
+
+  
+    box.classList.add("active");
+    document.body.classList.add("detail-open");
+  }
+  
+  function hideDetail() {
+    document.getElementById("detailBox").classList.remove("active");
+    document.body.classList.remove("detail-open");
+  }
+  
+  document.addEventListener("DOMContentLoaded", renderCards);
+  
+  function renderCards() {
+    const container = document.querySelector(".cards-container");
+    container.innerHTML = "";
+  
+    quests.forEach((quest, index) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.onclick = () => showDetail(index);
+      card.innerHTML = `
+        <div class="card-content">
+          <div class="ch3">${quest.icon}${quest.title}</div>
+          <br> 
+          ${quest.status ? `<div class="status">${quest.status}</div>` : ""}
+          <div class="xp">Reward: +${quest.reward}</div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+  
+
+  
+
 
 /* Test input */
 /*

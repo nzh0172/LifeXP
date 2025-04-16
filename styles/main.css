@@ -1,19 +1,27 @@
 body {
-    font-family: 'Comic Sans MS', cursive;
-    background: #fdfdfd url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+    font-family: 'Courier New', Courier, monospace;
+    background: #fdfdfd url('questbg2.png');
     margin: 0;
     padding: 0;
+    
   }
   .header {
     background: #fbc567;
-    padding: 10px 20px;
     display: flex;
+    padding: 15px; 
+    border-width: 100px;
+    text-align:left; 
     justify-content: space-between;
     align-items: center;
   }
   .header h1 {
     color: #a084ca;
-    margin: 0;
+    padding-left: 0px;
+    text-align: left;
+    margin:0 150px;
+    float: left;
+    font-family: 'Courier New', Courier, monospace;
+
   }
   .xp-box {
     background: #bce1ff;
@@ -22,14 +30,21 @@ body {
     font-weight: bold;
     display: flex;
     align-items: center;
+    font-family: 'Comic Sans MS', cursive;
   }
   .xp-box span {
     margin-left: 5px;
   }
-  .tasks {
-    background: #ffeee0;
-    padding: 20px;
+  .xp-box button{
+    margin-left: 5px;
   }
+
+  .activequest-alert{
+    /*background: #ffeee0;*/
+    padding: 30px;
+    margin: 0;
+  }
+
   .main-task {
     background: #ff6b35;
     color: white;
@@ -39,40 +54,86 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
-  .task-list {
+
+  .cards-container {
     display: flex;
+    justify-content: center;
     gap: 20px;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+    /*background: #ffeee0;*/
+
   }
-  .task {
-    background: #f4f4f8;
-    border: 2px solid #cfd6e0;
+
+  .card {
+    width: 300px;
+    border: 3px solid #fbc567;;
     border-radius: 8px;
-    padding: 10px;
-    width: 150px;
-    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background-color: #fff;
+   
   }
-  .task .status {
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+  .card-content .status{
     background: #ff6b35;
     color: white;
-    font-size: 12px;
-    border-radius: 4px;
-    padding: 2px 6px;
+    font-size: 16px;
+    border-radius: 8px;
+    padding: 2px 4px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
     position: absolute;
-    top: 5px;
-    left: 5px;
-    transform: translateY(30px);
+    
   }
-  .task .xp {
+  .card-content .xp {
     margin-top: 40px;
     font-weight: bold;
     color: #1f70c1;
   }
+  .card-content .ch3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+   
+  }
+
+  .card a {
+    margin-top: 15px;
+    padding: 10px 16px;
+    background-color:#f8ad2c ;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    align-items:center;
+
+  }
+
+  .card a:hover{
+    background-color:#a87419;
+  }
+
+
   .task-detail {
-    background: white;
-    border: 2px solid #cfd6e0;
+    background: #fbc567;
+    border: 2px solid black;
     border-radius: 8px;
     padding: 15px;
     position: absolute;
@@ -132,7 +193,8 @@ body {
   /* Modal settings and overlay */
   /* When add quest box is open */
   body.addquest-open .header,
-  body.addquest-open .tasks {
+  body.addquest-open .activequest-alert,
+  body.addquest-open .cards-container {
     pointer-events: none;
     user-select: none;
     filter: blur(3px);
@@ -140,8 +202,8 @@ body {
 
   /* When quest detail is open */
   body.detail-open .header,
-  body.detail-open .task-list,
-  body.detail-open .main-task,
+  body.detail-open .cards-container,
+  body.detail-open .activequest-alert,
   body.detail-open .add-quest{
     pointer-events: none;
     user-select: none;
