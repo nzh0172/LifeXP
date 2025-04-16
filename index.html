@@ -66,14 +66,12 @@
         <div class ="output-prompt" id="outputPromptBox">        
             <form id="outputPromptForm">
                 <textarea id="outputPrompt" name="outputPrompt" placeholder="Paste output prompt from ChatGPT here and click Add Task" required></textarea>
+                <p id="formatError" style="color:red; display:none;">Invalid format! Please use the exact Title/Backstory/Objective/Reward format.</p>
             </form>
         </div>
-
-
         
-
         <div class="submit-section" id="submitSection">
-            <button type="submit">Add Task</button>
+            <button class="submitNewQuest-btn" type="submit">Add Task</button>
             <button class="close" onclick="hideAddQuest()">❌</button>
         </div>
 
@@ -82,5 +80,6 @@
 
 
   <script src="scripts/main.js" defer></script>
+  <script src="scripts/db.js" defer></script>
 </body>
 </html>

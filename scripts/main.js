@@ -21,9 +21,11 @@ function hideAddQuest(){
     document.getElementById('addQuestBox').classList.remove('active');
     document.body.classList.remove('addquest-open');
     document.getElementById('newtask').value = '';
+    document.getElementById('outputPrompt').value = '';
 
 }
 
+//Prompt quest for adding task
 document.addEventListener("DOMContentLoaded", function () {
     const textarea = document.getElementById("newtask");
     const hiddenText = document.getElementById("hiddenCopyText");
@@ -63,6 +65,30 @@ function parseQuestText(text) {
   }
 
 
+// Validate the format of the output prompt
+document.getElementById("outputPrompt").addEventListener("input", function () {
+    const text = this.value;
+
+    const isValid = /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nReward:\s*(\d+)\s*coins$/i.test(text.trim());
+
+    const error = document.getElementById("formatError");
+
+    if (!isValid) {
+        error.style.display = "block";
+        this.style.borderColor = "red";
+        // Optionally: disable a submit button here
+         document.getElementById("submitNewQuest-btn").disabled = true;
+    } else {
+        error.style.display = "none";
+        this.style.borderColor = "#ccc";
+        // Optionally: enable a submit button here
+        document.getElementById("submitNewQuesst-btn").disabled = false;
+    }
+});
+
+
+/* Test input */
+/*
   const input = `Title: Feast of the Evening Flame
   Backstory: As nightfall nears, your strength wanes and your stomach growls like a restless beast. You must seek a hearty meal to restore your vigor and prepare for tomorrow’s trials. A simple feast tonight shall grant you the power to endure.
   Objective: i want to eat dinner tonight
@@ -70,5 +96,7 @@ function parseQuestText(text) {
   
   const parsed = parseQuestText(input);
   console.log(parsed);
+*/
+  
   
   
