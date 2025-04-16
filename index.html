@@ -3,46 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Life XP</title>
-  <link rel="stylesheet" href="styles/main.css">
-</head>
+  <link href="main.css" rel="stylesheet">
+  <title>LIFE XP</title>
+  </head>
 <body>
-  <div class="header">
-    <h1>Life XP</h1>
-    <div class="xp-box">🔷 <span>999</span> <button>+</button></div>
-  </div>
 
-  <div class="tasks">
+ <div class="header">
+        <h1>LifeXP</h1>
+        <div class="xp-box">🔷 <span>999</span> <button>+</button></div>
+</div>
+<div class="tasks">
     <div class="main-task">
-      <span>🔶 Complete 'Scrolls of Wisdom'</span>
-      <span>✔️</span>
-    </div>
+        <span>🔶 Complete 'Scrolls of Wisdom'</span>
+        <span>✔️</span>
+      </div>
+</div>
 
-    <div class="task-list">
-      <div class="task" onclick="showDetail()">
-        <div class="status">In Progress</div>
-        <div>Scrolls of Wisdom</div>
-        <div class="xp">+1000</div>
-      </div>
-      <div class="task">
-        <div>Sanity Run</div>
-        <div class="xp">+900</div>
-      </div>
-      <div class="task">
-        <div>Potion Brewing</div>
-        <div class="xp">+850</div>
+  <div class="cards-container">
+
+    <div class="card">
+      <img src="quest1.jpg" alt="Marketing Blog">
+      <div class="card-content">
+        <div class="ch3">📖Scrolls of Wisdom</div><br> 
+        <div class="status" onclick="showDetail()">In Progress</div>
+        <div class="xp">Reward: +1000</div>
+        <div>⭐️⭐️⭐️⭐️⭐️</div><br>
+        <a href="https://www.themarketingblog.co.uk/" class="btn btn-primary">Challenge🏆</a>
       </div>
     </div>
 
-    <div class="task-detail" id="detailBox">
-      <h2>📖 Scrolls of Wisdom <span class="status">In Progress</span></h2>
-      <p><strong>Quest backstory:</strong></p>
-      <p>something</p>
-      <div class="detail-buttons">
-        <button class="giveup" onclick="hideDetail()">❌ Give Up</button>
-        <button class="complete">✅ Complete</button>
+    <div class="card">
+        <img src="quest2.jpg" alt="Marketing Blog">
+        <div class="card-content">
+          <div class="ch3">🏃‍♀️Sanity Run</div><br> 
+          <div class="xp">Reward: +900</div>
+          <div>⭐️⭐️</div><br>
+          <a href="https://www.themarketingblog.co.uk/" class="btn btn-primary">Challenge🏆</a>
+        </div>
       </div>
-    </div>
+
+      <div class="card">
+        <img src="quest3.jpg" alt="Marketing Blog">
+        <div class="card-content">
+          <div class="ch3">🔮Potion Brewing</div><br> 
+          <div class="xp">Reward: +850</div>
+          <div>⭐️⭐️⭐️⭐️</div><br>
+          <a href="https://www.themarketingblog.co.uk/" class="btn btn-primary">Challenge🏆</a>
+        </div>
+      </div>
+
+      <div class="task-detail" id="detailBox">
+        <h2>📖 Scrolls of Wisdom <span class="status">In Progress</span></h2>
+        <p><strong>Quest backstory:</strong></p>
+        <p>something</p>
+        <div class="detail-buttons">
+          <button class="giveup" onclick="hideDetail()">❌ Give Up</button>
+          <button class="complete">✅ Complete</button>
+        </div>
+      </div>
   </div>
 
   <script>
@@ -53,5 +71,44 @@
       document.getElementById('detailBox').classList.remove('active');
     }
   </script>
+
+<div class="activitybox">
+    <div class="activity">
+        <span>🏆Activity Rewards</span>
+      </div>
+    <div class="activity-content">
+        <span>Finished Quest Story</span>
+        <span>⭐️⭐️⭐️⭐️⭐️</span>
+        <span>☑️</span>
+    </div>
+    <div class="activity-content">
+        <span>Finished Quest Story</span>
+        <span>⭐️⭐️</span>
+        <span>☑️</span>
+    </div>
+    <div class="activity-content">
+        <span>Finished Quest Story</span>
+        <span>⭐️⭐️⭐️</span>
+        <a href="https://www.themarketingblog.co.uk/" class="btn btn-primary">Claim</a>
+    </div>
+
+</div>
+
+<div class="bottombox">
+    <div class="bottom">
+      <h2>Contact Me</h2>
+      <form>
+        <div class="inputtype">
+          <h4>Email address</h4>
+          <input type="email" placeholder="Email" />
+          <br>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+      </form>
+    </div>
+</div> 
+
 </body>
 </html>
