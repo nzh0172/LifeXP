@@ -48,18 +48,5 @@ function deleteQuest(index) {
     renderQuests();     // refresh the list
   }
 
-  addQuest({
-    title: "Slay the Goblin King",
-    xp: 700,
-    status: "Not Started",
-    backstory: "You must journey into the depths to defeat the Goblin King."
-  });
-  
-  addQuest({
-    title: "Collect 5 Healing Herbs",
-    xp: 300,
-    status: "In Progress",
-    backstory: "A local healer requests your help gathering rare herbs."
-  });
-  
+
 

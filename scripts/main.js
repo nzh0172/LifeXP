@@ -1,4 +1,38 @@
 
+function initializeQuests() {
+  const existingQuests = getQuests();
+  if (existingQuests.length === 0) {
+    const defaultQuests = [
+      {
+        title: "Scrolls of Wisdom",
+        backstory: "You must study the ancient scrolls to gain forgotten knowledge.",
+        objective: "Read the scrolls in the library.",
+        reward: 1000,
+        icon: "📖",
+        status: "In Progress",
+      },
+      {
+        title: "Sanity Run",
+        backstory: "Run through the cursed woods before midnight to stay sane.",
+        objective: "Run through the woods before midnight.",
+        reward: 900,
+        icon: "🏃‍♀️",
+        status: "Not Started",
+      },
+      {
+        title: "Potion Brewing",
+        backstory: "Brew a potion strong enough to lift the villager's curse.",
+        objective: "Gather ingredients and brew the potion.",
+        reward: 850,
+        icon: "🔮",
+        status: "Not Started",
+      }
+    ];
+    
+    saveQuests(defaultQuests);
+  }
+}
+
 //Show quest box details
 function showDetail() {
     document.getElementById('detailBox').classList.add('active');
@@ -87,54 +121,25 @@ document.getElementById("outputPrompt").addEventListener("input", function () {
 });
 
 // Sample quest data (replace with getQuests() if using localStorage)
-const quests = [
-    {
-      title: "Scrolls of Wisdom",
-      backstory: "You must study the ancient scrolls to gain forgotten knowledge.",
-      objective: "Read the scrolls in the library.",
-      reward: 1000,
-      icon: "📖",
-      status: "In Progress",
 
-    },
-    {
-      title: "Sanity Run",
-      backstory: "Run through the cursed woods before midnight to stay sane.",
-      objective: "Run through the woods before midnight.",
-      reward: 900,
-      icon: "🏃‍♀️",
-      status: "Not Started",
-
-    },
-    {
-      title: "Potion Brewing",
-      backstory: "Brew a potion strong enough to lift the villager's curse.",
-      objective: "Gather ingredients and brew the potion.",
-      reward: 850,
-      icon: "🔮",
-      status: "Not Started",
-
-    }
-  ];
+  let currentQuestIndex = -1;
 
   function showDetail(index) {
-    const quest = quests[index];
+    currentQuestIndex = index;
+    //const quest = quests[index];
+    const quest = getQuests()[index]; // Use from storage to reflect current data
+    currentQuestIndex = index;
+    //const quest = quests[index];
     const box = document.getElementById("detailBox");
   
-    box.querySelector(".quest-title").textContent = `${quest.icon} ${quest.title}`;
+    box.querySelector(".quest-title").textContent = `${quest.icon|| '📜'} ${quest.title}`;
     box.querySelector(".quest-backstory").textContent = quest.backstory;
     box.querySelector(".quest-objective").textContent = quest.objective;
     box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
 
-  
     box.classList.add("active");
     document.body.classList.add("detail-open");
-  }
-  
-  function hideDetail() {
-    document.getElementById("detailBox").classList.remove("active");
-    document.body.classList.remove("detail-open");
   }
   
   document.addEventListener("DOMContentLoaded", renderCards);
@@ -143,13 +148,15 @@ const quests = [
     const container = document.querySelector(".cards-container");
     container.innerHTML = "";
   
+    const quests = getQuests(); // Get quests from localStorage
+    
     quests.forEach((quest, index) => {
       const card = document.createElement("div");
       card.className = "card";
       card.onclick = () => showDetail(index);
       card.innerHTML = `
         <div class="card-content">
-          <div class="ch3">${quest.icon}${quest.title}</div>
+          <div class="ch3">${quest.icon || '📜'} ${quest.title}</div>
           <br> 
           ${quest.status ? `<div class="status">${quest.status}</div>` : ""}
           <div class="xp">Reward: +${quest.reward}</div>
@@ -158,6 +165,58 @@ const quests = [
       container.appendChild(card);
     });
   }
+
+  // Save coin count to localStorage
+function saveXP(value) {
+  localStorage.setItem('totalXP', value);
+}
+
+// Get XP from localStorage
+function getXP() {
+  return parseInt(localStorage.getItem('totalXP')) || 0;
+}
+
+// Initialize XP
+let totalXP = getXP();
+
+// Update the coin UI
+function updateXPDisplay() {
+  document.getElementById("xp-amount").innerText = totalXP + " XP";
+}
+
+
+// Accept and complete a quest
+function acceptQuest(index) {
+  const quests = getQuests();
+  const reward = quests[index].reward;
+
+  totalXP += reward;
+  saveXP(totalXP);
+  updateXPDisplay();
+
+  quests[index].status = "Completed";
+  saveQuests(quests);
+  renderCards();
+
+  alert(`Quest completed! You earned ${reward} XP.`);
+}
+
+// On page load, initialize everything
+window.addEventListener("DOMContentLoaded", () => {
+  initializeQuests();
+  renderCards();
+  updateXPDisplay();
+});
+
+document.querySelector(".complete").addEventListener("click", function (){
+  const questTitle = document.querySelector(".quest-title").textContent.split(" ").slice(1).join(" ");
+  const quests = getQuests();
+  const index = quests.findIndex(q => q.title === questTitle);
+  if (index !== -1){
+    acceptQuest(index);
+    hideDetail();
+  }
+});
   
 
   

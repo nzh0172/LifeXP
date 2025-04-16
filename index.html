@@ -3,24 +3,40 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="styles/main.css" rel="stylesheet">
-    <title>LIFE XP</title>
-</head>
-<body>
+    <title>Life XP</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Macondo&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
     <div class="header">
-        <h1>Life XP</h1>
+      <div>
+        <header class="logo">🧭 LifeXP</h1>
+      </div>
+      <div class="right-section">
         <button onclick="showAddQuest()">➕ New Task</button>
-        <div class="xp-box">🔷 <span>999</span> <button>+</button></div>
-    </div>
-
-    
-    <div class="activequest-alert">
-        <div class="main-task">
-        <span>🔶 Complete 'Scrolls of Wisdom'</span>
-        <span>✔️</span>
+        <div class="xp-box">
+          <span class="xp-icon">✨</span>
+          <span class="xp-amount" id="xp-amount">0</span>
         </div>
+      </div>
+
     </div>
 
+
+    <div class="activequest-alert">
+      <div class="main-task">
+      <span>🔶 Complete 'Scrolls of Wisdom'</span>
+      <span>✔️</span>
+      </div>
+    </div>
 
     <div class="cards-container">
         <!--Used JS to dynamically update the cards-->
