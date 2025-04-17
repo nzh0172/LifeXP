@@ -137,7 +137,6 @@ document.getElementById("outputPrompt").addEventListener("input", function () {
     box.querySelector(".quest-objective").textContent = quest.objective;
     box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
-
     box.classList.add("active");
     document.body.classList.add("detail-open");
   }
