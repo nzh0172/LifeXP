@@ -1,243 +1,371 @@
 body {
-    font-family: "Macondo", cursive;
-    background: #fdfdfd url('questbg2.png');
-    margin: 0;
-    padding: 0;
-    
-  }
-  .header {
-    background: #fbc567;
-    display: flex;
-    padding: 15px; 
-    border-width: 100px;
-    text-align:left; 
-    justify-content: space-between;
-    align-items: center;
-  }
-  .header h1 {
-    color: #d2b5fe;
-    padding-left: 0px;
-    text-align: left;
-    margin:0 150px;
-    float: left;
-    font-family: "Macondo", cursive;
+  font-family: "Macondo", cursive;
+  background: #fff8f0;
+  margin: 0;
+  padding: 0;
+}
+.header {
+  background: #ffd87d;
+  display: flex;
+  /* padding: 15px; */
+  padding: 20px 32px;
+  border-width: 100px;
+  text-align: left;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  color: #d2b5fe;
+  padding-left: 0px;
+  text-align: left;
+  margin: 0 150px;
+  float: left;
+  font-family: "Macondo", cursive;
+}
 
-  }
+.logo {
+  font-family: "UnifrakturCook", cursive;
+  font-size: 2.5em;
+  color: #8659f5;
+  letter-spacing: 1px;
+}
 
-  .logo {
-    font-family: "UnifrakturCook", cursive;
-    font-size: 2.5em;
-    color: #8659f5;
-    letter-spacing: 1px;
-  }
-  
-  .xp-box {
-    background: #47d1ff;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    font-family: "Macondo", cursive;
-  }
-  .xp-box span {
-    margin-left: 5px;
-  }
-  .xp-box button{
-    margin-left: 5px;
-  }
+.xp-box {
+  background: #d0f0ff;
+  padding: 10px 16px;
+  border: 3px solid #90caf9;
+  border-radius: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 8px #e0f7fa;
+}
 
-  .right-section {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+.xp-box span {
+  margin-left: 5px;
+}
 
-  .activequest-alert{
-    /*background: #ffeee0;*/
-    padding: 30px;
-    margin: 0;
-  }
+.xp-box button {
+  margin-left: 5px;
+}
 
-  .main-task {
-    background: #ff6b35;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+.addtask-btn {
+  background: #d0f0ff;
+  padding: 10px 16px;
+  border: 3px solid #90caf9;
+  border-radius: 12px;
+  font-weight: bold;
+  font-family: "Macondo", cursive;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 8px #e0f7fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  .cards-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    /*background: #ffeee0;*/
+.addtask-btn:hover {
+  transform: scale(1.05);
+  color: #d2f3ff;
+  background-color: #2b2c5c;
+}
 
-  }
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-  .card {
-    width: 300px;
-    border: 3px solid #fbc567;;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    background-color: #fff;
-    transition: transform 0.2s ease;
-    cursor: pointer;
-  }
+.activequest-alert {
+  /*background: #ffeee0;*/
+  padding: 30px;
+  margin: 0;
+}
 
-  .card:hover {
-    transform: translateY(-8px);
-  }
+.main-task {
+  background: #ff6b35;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  .card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    
-  }
+.cards-container {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  /*background: #ffeee0;*/
+}
 
-  .card-content {
-    padding: 20px;
-  }
-  .card-content .status{
-    background: #ff6b35;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    padding: 2px 4px;
-    margin-top: 0;
-    margin-bottom: 10px;
-    text-align: center;
-    position: absolute;
-    
-  }
-  .card-content .xp {
-    margin-top: 40px;
-    font-weight: bold;
-    color: #1f70c1;
-  }
-  .card-content .ch3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    font-family: "Macondo", cursive;
-   
-  }
+.card {
+  width: 300px;
+  border: 3px solid #ffe0b2;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: #fffdf7;
+  transition: transform 0.2s ease;
+  /* cursor: pointer; */
+}
 
-  .card a {
-    margin-top: 15px;
-    padding: 10px 16px;
-    background-color:#f8ad2c ;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    align-items:center;
+.card:hover {
+  transform: translateY(-8px);
+}
 
-  }
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
 
-  .card a:hover{
-    background-color:#a87419;
-  }
+.card-content {
+  padding: 20px;
+}
+.card-content .status {
+  background: #d3d3d3;
+  color: #1a1a1a;
+  font-size: 16px;
+  border-radius: 8px;
+  /* padding: 2px 4px; */
+  padding: 6px 12px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  position: absolute;
+}
+.card-content .xp {
+  margin-top: 40px;
+  font-weight: bold;
+  color: #1f70c1;
+}
+.card-content .ch3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Macondo", cursive;
+  color: #6a4c93;
+}
 
+.card a {
+  margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #f8ad2c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  align-items: center;
+}
 
-  .task-detail {
-    background: #fbc567;
-    border: 2px solid black;
-    border-radius: 8px;
-    padding: 15px;
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    width: 60%;
-    z-index: 10;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    display: none;
-  }
-  .task-detail.active {
-    display: block;
-  }
-  .detail-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .detail-buttons button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .giveup {
-    background: #cfd6e0;
-  }
-  .complete {
-    background: #7ac74f;
-    color: white;
-  }
+.card a:hover {
+  background-color: #a87419;
+}
 
-  /* Add quest - i just copied from the task detail one*/
-  .add-quest{
-    background: white;
-    border: 2px solid #cfd6e0;
-    border-radius: 8px;
-    padding: 15px;
-    position: absolute;
-    top: 100px;
-    left: 20%;
-    width: 60%;
-    z-index: 10;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    display: none;
-  }
-  .add-quest.active {
-    display: block;
-  }
+.task-detail {
+  background: #f4e1c6;
+  border: 12px solid #a47148;
+  border-radius: 25px;
+  padding: 15px;
+  position: absolute;
+  top: 100px;
+  left: 20%;
+  width: 60%;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  color: #2c2c2c;
+}
 
-  textarea{
-    resize: none;
-    width: 100%;
-  }
+.task-detail.active {
+  display: block;
+}
 
-  /* Modal settings and overlay */
-  /* When add quest box is open */
-  body.addquest-open .header,
-  body.addquest-open .activequest-alert,
-  body.addquest-open .cards-container {
-    pointer-events: none;
-    user-select: none;
-    filter: blur(3px);
-  }
+.detail-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
 
-  /* When quest detail is open */
-  body.detail-open .header,
-  body.detail-open .cards-container,
-  body.detail-open .activequest-alert,
-  body.detail-open .add-quest{
-    pointer-events: none;
-    user-select: none;
-    filter: blur(3px);
+.detail-buttons button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-  }
+.giveup {
+  background: #cfd6e0;
+}
 
-  #copyBox {
-    margin-top: 10px;
-    width: 100%;
-    padding: 8px;
-    font-weight: bold;
-    background: #eef2f7;
-    border: 2px solid #cfd6e0;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
+.complete {
+  background: #7ac74f;
+  color: white;
+}
+
+/* Add quest - i just copied from the task detail one*/
+
+.add-quest h2 {
+  font-family: "UnifrakturCook", cursive;
+  font-size: 2.5em;
+}
+
+.add-quest {
+  box-sizing: border-box;
+  padding: 2rem;
+  max-width: 640px;
+  margin: auto;
+  background: linear-gradient(to bottom right, #e3ecf8, #f0f6ff);
+  color: #1d2b53;
+  border: 4px solid #7da0ca;
+  border-radius: 28px;
+  box-shadow: 0 12px 30px rgba(45, 78, 134, 0.3);
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  z-index: 10;
+  display: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.add-quest * {
+  box-sizing: border-box;
+}
+
+.add-quest.active {
+  display: block;
+}
+
+#addQuestForm label {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a2a47;
+  font-family: "Cinzel", serif;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  background-color: white;
+  border: 2px solid #8aa5d2;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  color: #1a2a47;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.submitNewQuest-btn {
+  margin-top: 10px;
+  background-color: #2b2c5c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.submitNewQuest-btn:hover {
+  transform: scale(1.05);
+  background-color: #d2f3ff;
+  color: #2b2c5c;
+}
+
+.close {
+  margin-top: 10px;
+  background-color: #2b2c5c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.close:hover {
+  transform: scale(1.05);
+  background-color: #d2f3ff;
+  color: #2b2c5c;
+}
+
+/* Modal settings and overlay */
+/* When add quest box is open */
+body.addquest-open .header,
+body.addquest-open .activequest-alert,
+body.addquest-open .cards-container {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(3px);
+}
+
+/* When quest detail is open */
+body.detail-open .header,
+body.detail-open .cards-container,
+body.detail-open .activequest-alert,
+body.detail-open .add-quest {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(3px);
+}
+
+#copyBox {
+  margin-top: 10px;
+  margin-bottom: 1rem; /* extra spacing below */
+  width: 100%;
+  padding: 8px 8px;
+  background: #eef2fb;
+  border: 2px solid #b0c4de;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #1a2a47;
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+#copyBox:hover {
+  background: #dbe7f4; /* slightly deeper blue on hover */
+}
+
+.accept-btn {
+  margin-top: 10px;
+  background-color: #2b2c5c;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 2px 4px 0px #d4b774;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.accept-btn:hover {
+  transform: scale(1.05);
+  background-color: #d2f3ff;
+  color: #2b2c5c;
+}

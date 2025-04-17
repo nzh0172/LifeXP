@@ -21,21 +21,13 @@
         <header class="logo">🧭 LifeXP</h1>
       </div>
       <div class="right-section">
-        <button onclick="showAddQuest()">➕ New Task</button>
         <div class="xp-box">
           <span class="xp-icon">✨</span>
           <span class="xp-amount" id="xp-amount">0</span>
         </div>
+        <button class="addtask-btn" onclick="showAddQuest()">➕ New Task</button>
       </div>
 
-    </div>
-
-
-    <div class="activequest-alert">
-      <div class="main-task">
-      <span>🔶 Complete 'Scrolls of Wisdom'</span>
-      <span>✔️</span>
-      </div>
     </div>
 
     <div class="cards-container">
@@ -62,7 +54,7 @@
         <h2>➕ Add New Quest</h2>
         <div>
         <form id="addQuestForm">
-            <label for="newtask">What shall I do today?</label><br />
+            <label for="newtask">What quests must be completed today?</label><br />
             <textarea id="newtask" name="newtask"></textarea>
         </form>
         </div>
@@ -70,17 +62,17 @@
         <!-- Hidden input holding the full text -->
         <input type="hidden" id="hiddenCopyText" />
         <!-- Visible input with placeholder (not the real text) -->
-        <input type="text" id="copyBox" placeholder="Click to copy quest prompt to ChatGPT" readonly onclick="copyToClipboard()" />
+        <input type="text" id="copyBox" placeholder="Click to copy prompt" readonly onclick="copyToClipboard()" />
         </div>
         <div class ="output-prompt" id="outputPromptBox">
         <form id="outputPromptForm">
-            <textarea id="outputPrompt" name="outputPrompt" placeholder="Paste output prompt from ChatGPT here and click Add Task" required></textarea>
+            <textarea id="outputPrompt" name="outputPrompt" placeholder="Paste ChatGPT output and click Add Task" required></textarea>
             <p id="formatError" style="color:red; display:none;">Invalid format! Please use the exact Title/Backstory/Objective/Reward format.</p>
         </form>
         </div>
         <div class="submit-section" id="submitSection">
         <button class="submitNewQuest-btn" type="submit">Add Task</button>
-        <button class="close" onclick="hideAddQuest()">❌</button>
+        <button class="close" onclick="hideAddQuest()">Close</button>
         </div>
     </div>
 
