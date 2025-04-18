@@ -81,20 +81,49 @@ function copyToClipboard() {
   navigator.clipboard.writeText(hiddenText.value);
   alert("Copied to clipboard!");
 }
+//
 
-function parseQuestText(text) {
-  const titleMatch = text.match(/Title:\s*(.+)/);
-  const backstoryMatch = text.match(/Backstory:\s*((?:.|\n)*?)Objective:/);
-  const objectiveMatch = text.match(/Objective:\s*(.+)/);
-  const rewardMatch = text.match(/Reward:\s*(\d+)\s*coins/i);
+/*function parseQuestText(text) {
+    const titleMatch = text.match(/Title:\s*(.+)/);
+    const backstoryMatch = text.match(/Backstory:\s*((?:.|\n)*?)Objective:/);
+    const objectiveMatch = text.match(/Objective:\s*(.+)/);
+    const rewardMatch = text.match(/Reward:\s*(\d+)\s*coins/i);
+  
+    return {
+      title: titleMatch ? titleMatch[1].trim() : null,
+      backstory: backstoryMatch ? backstoryMatch[1].trim() : null,
+      objective: objectiveMatch ? objectiveMatch[1].trim() : null,
+      reward: rewardMatch ? rewardMatch[1].trim() : null
+    };
+  }*/
 
-  return {
-    title: titleMatch ? titleMatch[1].trim() : null,
-    backstory: backstoryMatch ? backstoryMatch[1].trim() : null,
-    objective: objectiveMatch ? objectiveMatch[1].trim() : null,
-    reward: rewardMatch ? rewardMatch[1].trim() : null,
-  };
-}
+  function parseQuestText(text) {
+    const lines = text.split("\n").map(line => line.trim());
+    const quest = {
+      title: "",
+      backstory: "",
+      objective: "",
+      reward: 0,
+      icon: "🎯",
+      status: "Not Started"
+    };
+  
+    lines.forEach(line => {
+      if (line.toLowerCase().startsWith("objective:")) {
+        const value = line.split(":")[1].trim();
+        quest.objective = value;
+        quest.title = value.charAt(0).toUpperCase() + value.slice(1);
+      } else if (line.toLowerCase().startsWith("reward:")) {
+        const rewardMatch = line.match(/\d+/);
+        quest.reward = rewardMatch ? parseInt(rewardMatch[0]) : 0;
+      }
+    });
+  
+    return quest;
+  }
+  
+  
+  
 
 // Validate the format of the output prompt
 document.getElementById("outputPrompt").addEventListener("input", function () {
@@ -107,37 +136,39 @@ document.getElementById("outputPrompt").addEventListener("input", function () {
 
   const error = document.getElementById("formatError");
 
-  if (!isValid) {
-    error.style.display = "block";
-    this.style.borderColor = "red";
-    // Optionally: disable a submit button here
-    document.getElementById("submitNewQuest-btn").disabled = true;
-  } else {
-    error.style.display = "none";
-    this.style.borderColor = "#ccc";
-    // Optionally: enable a submit button here
-    document.getElementById("submitNewQuesst-btn").disabled = false;
-  }
+    if (!isValid) {
+        error.style.display = "block";
+        this.style.borderColor = "red";
+        // Optionally: disable a submit button here
+         document.getElementById("submitNewQuest-btn").disabled = true;
+    } else {
+        error.style.display = "none";
+        this.style.borderColor = "#ccc";
+        // Optionally: enable a submit button here
+        document.getElementById("submitNewQuest-btn").disabled = false;
+    }
 });
+
+
+
+
 
 // Sample quest data (replace with getQuests() if using localStorage)
 
-let currentQuestIndex = -1;
-
-function showDetail(index) {
-  currentQuestIndex = index;
-  //const quest = quests[index];
-  const quest = getQuests()[index]; // Use from storage to reflect current data
-  currentQuestIndex = index;
-  //const quest = quests[index];
-  const box = document.getElementById("detailBox");
-
-  box.querySelector(".quest-title").textContent = `${quest.icon || "📜"} ${
-    quest.title
-  }`;
-  box.querySelector(".quest-backstory").textContent = quest.backstory;
-  box.querySelector(".quest-objective").textContent = quest.objective;
-  box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
+  let currentQuestIndex = -1;
+//
+  function showDetail(index) {
+    currentQuestIndex = index;
+    //const quest = quests[index];
+    const quest = getQuests()[index]; // Use from storage to reflect current data
+    currentQuestIndex = index;
+    //const quest = quests[index];
+    const box = document.getElementById("detailBox");
+  
+    box.querySelector(".quest-title").textContent = `${quest.icon|| '📜'} ${quest.title}`;
+    box.querySelector(".quest-backstory").textContent = quest.backstory;
+    box.querySelector(".quest-objective").textContent = quest.objective;
+    box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
   box.classList.add("active");
   document.body.classList.add("detail-open");
@@ -225,6 +256,100 @@ document.querySelector(".complete").addEventListener("click", function () {
     hideDetail();
   }
 });
+  
+
+
+
+/*
+  //ADD TASK ACTION 
+  function addQuest() {
+  const promptText = document.getElementById("outputPrompt").value.trim();
+  const parsed = parseQuestText(promptText);
+
+  if (!parsed.title || !parsed.backstory || !parsed.objective || !parsed.reward) {
+    alert("Invalid quest format. Please check your input.");
+    return;
+  }
+
+  // Default icon and status
+  /*const icon = "🆕";
+  const status = "Not Started";
+
+  const newQuest = {
+    title: parsed.title,
+    backstory: parsed.backstory,
+    objective: parsed.objective,
+    reward: parseInt(parsed.reward),
+    icon,
+    status
+  };
+
+  // Add to quests array
+  quests.push(newQuest);
+
+  // Re-render cards
+  renderCards();
+
+  // Hide the add quest box and clear form
+  hideAddQuest();
+}*/
+
+
+  
+//
+function addQuest() {
+  const text = document.getElementById("outputPrompt").innerText || document.getElementById("outputPrompt").value;
+  const newQuest = parseQuestText(text);
+
+  // Optional validation
+  if (!newQuest.objective || !newQuest.reward) {
+      alert("Please make sure the quest includes an objective and reward.");
+      return;
+  }
+
+  quests.push(newQuest);
+  renderCards(); // Refresh the UI
+  closeModal(); // If you have a modal
+}
+
+
+
+function getRandomIcon() {
+  const icons = ["📖", "🏃‍♀️", "🔮", "🌞", "🧭", "🎒", "🛡️"];
+  return icons[Math.floor(Math.random() * icons.length)];
+}
+
+//
+function closeModal() {
+  document.getElementById("taskPopup").style.display = "none";
+}
+
+
+//
+document.getElementById("addTaskBtn").addEventListener("click", addQuest);
+//
+document.getElementById("questInput").value = "";
+document.getElementById("outputPrompt").innerText = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Test input */
 /*
@@ -236,3 +361,6 @@ document.querySelector(".complete").addEventListener("click", function () {
   const parsed = parseQuestText(input);
   console.log(parsed);
 */
+  
+  
+  
