@@ -1,11 +1,11 @@
+let quests = [];
+
 function initializeQuests() {
-  const existingQuests = getQuests();
-  if (existingQuests.length === 0) {
-    const defaultQuests = [
+  if (quests.length === 0) {
+    quests = [
       {
         title: "The Scrolls of Wisdom",
-        backstory:
-          "The ancient tomes await, heavy with knowledge and the promise of brain ache. Your sanity hangs by a thread, but you must face the pages to conquer the chaos of unknowing. You alone can wield the power buried within these cursed notes.",
+        backstory: "The ancient tomes await, heavy with knowledge...",
         objective: "study",
         reward: 1000,
         icon: "📖",
@@ -13,8 +13,7 @@ function initializeQuests() {
       },
       {
         title: "Sanity Run",
-        backstory:
-          "Madness brews like a storm in your skull, and the couch whispers sweet nothings of surrender. But your legs remember freedom, and the path awaits your thundering footsteps. You must flee the grip of chaos before it claims your mind.",
+        backstory: "Madness brews like a storm in your skull...",
         objective: "jog",
         reward: 900,
         icon: "🏃‍♀️",
@@ -22,16 +21,13 @@ function initializeQuests() {
       },
       {
         title: "Brew of Awakening",
-        backstory:
-          "The morning fog clings to your mind, and dark circles haunt your eyes like battle scars. Only the sacred brew of the bean can lift this veil and soothe your weary soul. You must craft this elixir and reclaim your clarity.",
+        backstory: "The morning fog clings to your mind...",
         objective: "make a cup of coffee.",
         reward: 850,
         icon: "🔮",
         status: "Yet to Embark",
       },
     ];
-
-    saveQuests(defaultQuests);
   }
 }
 
@@ -67,11 +63,12 @@ document.addEventListener("DOMContentLoaded", function () {
       "You are to turn a given task into a quest with short backstory consists of 1 short paragraph with 3 sentences, 50 words max. If the task contains a name or a deadline, you must include it. " +
       "The quest must have the user's involvement using pronoun 'You', not a third party. Make it under this format 'Backstory:' " +
       "For each task, give a cool epic medieval quest name under this format (make it under 20 characters), Title: X. " +
-      "Write exactly as the original task under this format, Objective: X, do not add any additional info such as time or deadline or other character unless mentioned in the task. " +
-      "Do not put any symbols such as double ** in title, backstory, objective and reward. " +
+      "Rephrase the original task under this format, Objective: X, do not add any additional info such as time or deadline or other character unless mentioned in the task. " +
+      "Do not put any symbols such as double ** in title, backstory, objective, reward and icon. " +
+      "Make a suitable icon for the quest under this format, Icon: X." +
       "For each task, give an amount of XP that is appropriate for the level of difficulty of the task. " +
       "The coins must not be zero or negative. Give only XP, no other comments needed. Make it under this format 'Reward: X XP'. " +
-      "The appearance order must be: first, Title, then Backstory, Objective, and Reward.\n\n" +
+      "The appearance order must be: first, Title, then Backstory, Objective, Reward and Icon.\n\n" +
       textarea.value;
   });
 });
@@ -81,58 +78,30 @@ function copyToClipboard() {
   navigator.clipboard.writeText(hiddenText.value);
   alert("Copied to clipboard!");
 }
-//
 
-/*function parseQuestText(text) {
-    const titleMatch = text.match(/Title:\s*(.+)/);
-    const backstoryMatch = text.match(/Backstory:\s*((?:.|\n)*?)Objective:/);
-    const objectiveMatch = text.match(/Objective:\s*(.+)/);
-    const rewardMatch = text.match(/Reward:\s*(\d+)\s*coins/i);
-  
-    return {
-      title: titleMatch ? titleMatch[1].trim() : null,
-      backstory: backstoryMatch ? backstoryMatch[1].trim() : null,
-      objective: objectiveMatch ? objectiveMatch[1].trim() : null,
-      reward: rewardMatch ? rewardMatch[1].trim() : null
-    };
-  }*/
+function parseQuestText(text) {
+  const titleMatch = text.match(/Title:\s*(.+)/i);
+  const backstoryMatch = text.match(/Backstory:\s*((?:.|\n)*?)\nObjective:/i);
+  const objectiveMatch = text.match(/Objective:\s*(.+)/i);
+  const rewardMatch = text.match(/Reward:\s*(\d+)\s*XP?/i);
+  const iconMatch = text.match(/Icon:\s*(.+)/i);
 
-  function parseQuestText(text) {
-    const lines = text.split("\n").map(line => line.trim());
-    const quest = {
-      title: "",
-      backstory: "",
-      objective: "",
-      reward: 0,
-      icon: "🎯",
-      status: "Not Started"
-    };
-  
-    lines.forEach(line => {
-      if (line.toLowerCase().startsWith("objective:")) {
-        const value = line.split(":")[1].trim();
-        quest.objective = value;
-        quest.title = value.charAt(0).toUpperCase() + value.slice(1);
-      } else if (line.toLowerCase().startsWith("reward:")) {
-        const rewardMatch = line.match(/\d+/);
-        quest.reward = rewardMatch ? parseInt(rewardMatch[0]) : 0;
-      }
-    });
-  
-    return quest;
-  }
-  
-  
-  
+
+  return {
+    title: titleMatch ? titleMatch[1].trim() : "",
+    backstory: backstoryMatch ? backstoryMatch[1].trim() : "",
+    objective: objectiveMatch ? objectiveMatch[1].trim() : "",
+    reward: rewardMatch ? parseInt(rewardMatch[1]) : 0,
+    icon: iconMatch ? iconMatch[1].trim() : getRandomIcon(),
+    status: "Not Started"
+  };
+}
 
 // Validate the format of the output prompt
 document.getElementById("outputPrompt").addEventListener("input", function () {
   const text = this.value;
 
-  const isValid =
-    /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nReward:\s*(\d+)\s*coins$/i.test(
-      text.trim()
-    );
+const isValid = /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nReward:\s*(\d+)\s*XP(?:\nIcon:\s*(.+))?$/i.test(text.trim());
 
   const error = document.getElementById("formatError");
 
@@ -149,43 +118,34 @@ document.getElementById("outputPrompt").addEventListener("input", function () {
     }
 });
 
-
-
-
-
 // Sample quest data (replace with getQuests() if using localStorage)
+let currentQuestIndex = -1;
 
-  let currentQuestIndex = -1;
-//
-  function showDetail(index) {
-    currentQuestIndex = index;
-    //const quest = quests[index];
-    const quest = getQuests()[index]; // Use from storage to reflect current data
-    currentQuestIndex = index;
-    //const quest = quests[index];
-    const box = document.getElementById("detailBox");
-  
-    box.querySelector(".quest-title").textContent = `${quest.icon|| '📜'} ${quest.title}`;
-    box.querySelector(".quest-backstory").textContent = quest.backstory;
-    box.querySelector(".quest-objective").textContent = quest.objective;
-    box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
+//Show quest details
+function showDetail(index) {
+  const quest = getQuests()[index];
+  currentQuestIndex = index;
+  const box = document.getElementById("detailBox");
+
+  box.querySelector(".quest-title").textContent = `${quest.icon|| '📜'} ${quest.title}`;
+  box.querySelector(".quest-backstory").textContent = quest.backstory;
+  box.querySelector(".quest-objective").textContent = quest.objective;
+  box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
   box.classList.add("active");
   document.body.classList.add("detail-open");
 }
 
-document.addEventListener("DOMContentLoaded", renderCards);
-
+// Render the quest cards
 function renderCards() {
   const container = document.querySelector(".cards-container");
   container.innerHTML = "";
 
-  const quests = getQuests(); // Get quests from localStorage
-
   quests.forEach((quest, index) => {
+    if (!quest) return; // skip if undefined
+
     const card = document.createElement("div");
     card.className = "card";
-    // card.onclick = () => showDetail(index);
     card.innerHTML = `
       <div class="card-content">
         <div class="ch3">${quest.icon || "📜"} ${quest.title}</div>
@@ -200,41 +160,35 @@ function renderCards() {
 
     container.appendChild(card);
   });
-}
 
-// Save coin count to localStorage
-function saveXP(value) {
-  localStorage.setItem("totalXP", value);
+  console.log("Cards rendered");
+  console.log(quests);
 }
-
-// Get XP from localStorage
-function getXP() {
-  return parseInt(localStorage.getItem("totalXP")) || 0;
-}
-
 // Initialize XP
-let totalXP = getXP();
+let totalXP = 0;
 
-// Update the coin UI
+function getXP() { 
+  return totalXP; 
+}
+
+// Update the XP UI
 function updateXPDisplay() {
   document.getElementById("xp-amount").innerText = totalXP + " XP";
 }
 
 // Accept and complete a quest
 function acceptQuest(index) {
-  const quests = getQuests();
   const reward = quests[index].reward;
 
   totalXP += reward;
-  saveXP(totalXP);
   updateXPDisplay();
 
   quests[index].status = "Completed";
-  saveQuests(quests);
   renderCards();
 
   alert(`Quest completed! You earned ${reward} XP.`);
 }
+
 
 // On page load, initialize everything
 window.addEventListener("DOMContentLoaded", () => {
@@ -256,111 +210,17 @@ document.querySelector(".complete").addEventListener("click", function () {
     hideDetail();
   }
 });
-  
+    
+//Add quest
+function addQuest() {
+  const text = document.getElementById("outputPrompt").value;
+  const newQuest = parseQuestText(text);
 
-
-
-/*
-  //ADD TASK ACTION 
-  function addQuest() {
-  const promptText = document.getElementById("outputPrompt").value.trim();
-  const parsed = parseQuestText(promptText);
-
-  if (!parsed.title || !parsed.backstory || !parsed.objective || !parsed.reward) {
-    alert("Invalid quest format. Please check your input.");
+  if (!newQuest || !newQuest.title || !newQuest.objective || !newQuest.reward || !newQuest.icon || !newQuest.backstory) {
+    alert("Invalid quest format.");
     return;
   }
 
-  // Default icon and status
-  /*const icon = "🆕";
-  const status = "Not Started";
-
-  const newQuest = {
-    title: parsed.title,
-    backstory: parsed.backstory,
-    objective: parsed.objective,
-    reward: parseInt(parsed.reward),
-    icon,
-    status
-  };
-
-  // Add to quests array
   quests.push(newQuest);
-
-  // Re-render cards
   renderCards();
-
-  // Hide the add quest box and clear form
-  hideAddQuest();
-}*/
-
-
-  
-//
-function addQuest() {
-  const text = document.getElementById("outputPrompt").innerText || document.getElementById("outputPrompt").value;
-  const newQuest = parseQuestText(text);
-
-  // Optional validation
-  if (!newQuest.objective || !newQuest.reward) {
-      alert("Please make sure the quest includes an objective and reward.");
-      return;
-  }
-
-  quests.push(newQuest);
-  renderCards(); // Refresh the UI
-  closeModal(); // If you have a modal
 }
-
-
-
-function getRandomIcon() {
-  const icons = ["📖", "🏃‍♀️", "🔮", "🌞", "🧭", "🎒", "🛡️"];
-  return icons[Math.floor(Math.random() * icons.length)];
-}
-
-//
-function closeModal() {
-  document.getElementById("taskPopup").style.display = "none";
-}
-
-
-//
-document.getElementById("addTaskBtn").addEventListener("click", addQuest);
-//
-document.getElementById("questInput").value = "";
-document.getElementById("outputPrompt").innerText = "";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Test input */
-/*
-  const input = `Title: Feast of the Evening Flame
-  Backstory: As nightfall nears, your strength wanes and your stomach growls like a restless beast. You must seek a hearty meal to restore your vigor and prepare for tomorrow’s trials. A simple feast tonight shall grant you the power to endure.
-  Objective: i want to eat dinner tonight
-  Reward: 100 coins`;
-  
-  const parsed = parseQuestText(input);
-  console.log(parsed);
-*/
-  
-  
-  
