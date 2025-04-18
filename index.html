@@ -32,11 +32,11 @@
 
     <div class="cards-container">
         <!--Used JS to dynamically update the cards-->
-        <!-- test etst test -->
     </div>
 
 
     <div class="task-detail" id="detailBox">
+        <button class="close" onclick="hideDetail()">X</button>
         <h2 class = "quest-title">📖 Scrolls of Wisdom <span class="status">In Progress</span></h2>
         <p><strong>Backstory:</strong></p>
         <p class = "quest-backstory"></p>
@@ -45,7 +45,8 @@
         <p><strong>Reward:</strong></p>
         <p class = "quest-reward"></p>
         <div class="detail-buttons">
-            <button class="giveup" onclick="hideDetail()">❌ Give Up</button>
+            <button class="giveup" onclick="giveupQuest()">❌ Give Up</button>
+            <button class="accept">✅ Accept</button>
             <button class="complete">✅ Complete</button>
         </div>
     </div>

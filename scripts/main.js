@@ -9,7 +9,7 @@ function initializeQuests() {
         objective: "study",
         reward: 1000,
         icon: "📖",
-        status: "Pages Turning",
+        status: "Yet to Embark",
       },
       {
         title: "Sanity Run",
@@ -93,7 +93,7 @@ function parseQuestText(text) {
     objective: objectiveMatch ? objectiveMatch[1].trim() : "",
     reward: rewardMatch ? parseInt(rewardMatch[1]) : 0,
     icon: iconMatch ? iconMatch[1].trim() : getRandomIcon(),
-    status: "Not Started"
+    status: "Yet to Embark"
   };
 }
 
@@ -120,7 +120,6 @@ const isValid = /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nR
 
 // Sample quest data (replace with getQuests() if using localStorage)
 let currentQuestIndex = -1;
-
 //Show quest details
 function showDetail(index) {
   const quest = getQuests()[index];
@@ -132,11 +131,30 @@ function showDetail(index) {
   box.querySelector(".quest-objective").textContent = quest.objective;
   box.querySelector(".quest-reward").textContent = ` ${quest.reward}`;
 
+  // Button visibility logic
+  const acceptButton = document.querySelector(".accept");
+  const giveupButton = document.querySelector(".giveup");
+  const completeButton = document.querySelector(".complete");
+
+  if (quest.status === "Yet to Embark") {
+    acceptButton.style.display = "block";
+    giveupButton.style.display = "none";
+    completeButton.style.display = "none";
+  } else if (quest.status === "In Progress") {
+    acceptButton.style.display = "none";
+    giveupButton.style.display = "block";
+    completeButton.style.display = "block";
+  } else {
+    acceptButton.style.display = "none";
+    giveupButton.style.display = "none";
+    completeButton.style.display = "none";
+  }
+
   box.classList.add("active");
   document.body.classList.add("detail-open");
 }
 
-// Render the quest cards
+// Render the quest cards (ui and list)
 function renderCards() {
   const container = document.querySelector(".cards-container");
   container.innerHTML = "";
@@ -152,9 +170,11 @@ function renderCards() {
         <br>
         ${quest.status ? `<div class="status">${quest.status}</div>` : ""}
         <div class="xp">Reward: +${quest.reward}</div>
-        <button class="accept-btn" onclick="event.stopPropagation(); showDetail(${index})">
-     ✦ Details
-    </button>
+        <div class="card-buttonrow">
+              <button class="carddetail-btn" onclick="event.stopPropagation(); showDetail(${index})">
+          ✦ Details
+          </button>
+        </div>
       </div>
     `;
 
@@ -164,6 +184,43 @@ function renderCards() {
   console.log("Cards rendered");
   console.log(quests);
 }
+
+/*
+function renderCards() {
+  const container = document.querySelector(".cards-container");
+  container.innerHTML = "";
+
+  quests.forEach((quest, index) => {
+    if (!quest) return; // skip if undefined
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="card-content">
+        <div class="ch3">${quest.icon || "📜"} ${quest.title}</div>
+        <br>
+        ${quest.status ? `<div class="status">${quest.status}</div>` : ""}
+        <div class="xp">Reward: +${quest.reward}</div>
+        <div class="card-buttonrow">
+              <button class="carddetail-btn" onclick="event.stopPropagation(); showDetail(${index})">
+          ✦ Details
+          </button>
+              <button class="cardaccept-btn" onclick="event.stopPropagation(); acceptQuest(${index})">
+          ✦ Accept
+          </button>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  console.log("Cards rendered");
+  console.log(quests);
+}
+
+*/
+
 // Initialize XP
 let totalXP = 0;
 
@@ -176,15 +233,41 @@ function updateXPDisplay() {
   document.getElementById("xp-amount").innerText = totalXP + " XP";
 }
 
-// Accept and complete a quest
+// Accept the quest first then complete it
 function acceptQuest(index) {
+  const quest = quests[index];
+  if (quest.status === "Yet to Embark") {
+    quest.status = "In Progress";
+    renderCards();
+    alert(`Quest accepted! ${quest.title} is now in progress.`);
+  } else {
+    alert(`Quest already in progress or completed.`);
+  }
+}
+
+// Accept the quest first then complete it
+function giveupQuest(index) {
+  const quest = quests[index];
+  if (confirm("Are you sure you want to give up on this quest?"))
+  {
+    //quest.status = "Gave Up";
+    removeQuest(index); //delete the card
+    renderCards(); //update the card ui and list
+    hideDetail();
+  }
+
+}
+
+// Complete a quest once finished
+function completeQuest(index) {
   const reward = quests[index].reward;
 
   totalXP += reward;
   updateXPDisplay();
 
   quests[index].status = "Completed";
-  renderCards();
+  removeQuest(index); //delete the card
+  renderCards(); //update the card ui and list
 
   alert(`Quest completed! You earned ${reward} XP.`);
 }
@@ -197,7 +280,25 @@ window.addEventListener("DOMContentLoaded", () => {
   updateXPDisplay();
 });
 
+// Complete quest button
 document.querySelector(".complete").addEventListener("click", function () {
+  // Get quest title to get the index
+  const questTitle = document
+    .querySelector(".quest-title")
+    .textContent.split(" ")
+    .slice(1)
+    .join(" ");
+  const quests = getQuests();
+  const index = quests.findIndex((q) => q.title === questTitle);
+  if (index !== -1) {
+    completeQuest(index);
+    hideDetail();
+  }
+});
+
+// Accept quest button
+document.querySelector(".accept").addEventListener("click", function () {
+  // Get quest title to get the index
   const questTitle = document
     .querySelector(".quest-title")
     .textContent.split(" ")
@@ -207,6 +308,7 @@ document.querySelector(".complete").addEventListener("click", function () {
   const index = quests.findIndex((q) => q.title === questTitle);
   if (index !== -1) {
     acceptQuest(index);
+    showDetail(index);
     hideDetail();
   }
 });
@@ -223,4 +325,5 @@ function addQuest() {
 
   quests.push(newQuest);
   renderCards();
+  alert("Quest added successfully!");
 }

@@ -175,10 +175,12 @@ body {
   border: 12px solid #a47148;
   border-radius: 25px;
   padding: 15px;
-  position: absolute;
-  top: 100px;
-  left: 20%;
+  position: fixed; /* was 'absolute', change to 'fixed' for viewport */
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* ⬅️ perfect centering */
   width: 60%;
+  max-width: 700px;
   z-index: 10;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: none;
@@ -211,6 +213,7 @@ body {
   background: #7ac74f;
   color: white;
 }
+
 
 /* Add quest - i just copied from the task detail one*/
 
@@ -290,18 +293,21 @@ textarea {
 }
 
 .close {
-  margin-top: 10px;
   background-color: #2b2c5c;
   color: white;
   font-weight: bold;
   border: none;
-  padding: 8px 14px;
-  font-size: 0.9rem;
-  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 1.5rem;
+  border-radius: 99px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   letter-spacing: 1px;
   transition: all 0.2s ease;
+  position: absolute;
+  right: 0px;
+  top: -20px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .close:hover {
@@ -349,7 +355,28 @@ body.detail-open .add-quest {
   background: #dbe7f4; /* slightly deeper blue on hover */
 }
 
-.accept-btn {
+.cardaccept-btn {
+  margin-top: 10px;
+  background-color: #5e8429;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 2px 4px 0px #d4b774;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.cardaccept-btn:hover {
+  transform: scale(1.05);
+  background-color: #d2f3ff;
+  color: #2b2c5c;
+}
+
+.carddetail-btn {
   margin-top: 10px;
   background-color: #2b2c5c;
   color: white;
@@ -364,8 +391,9 @@ body.detail-open .add-quest {
   transition: all 0.2s ease;
 }
 
-.accept-btn:hover {
+.carddetail-btn:hover {
   transform: scale(1.05);
   background-color: #d2f3ff;
   color: #2b2c5c;
 }
+
