@@ -112,6 +112,7 @@ body {
   background-color: #fffdf7;
   transition: transform 0.2s ease;
   /* cursor: pointer; */
+
 }
 
 .card:hover {
@@ -126,6 +127,8 @@ body {
 
 .card-content {
   padding: 20px;
+  justify-items: center;
+
 }
 .card-content .status {
   background: #d3d3d3;
@@ -135,13 +138,14 @@ body {
   /* padding: 2px 4px; */
   padding: 6px 12px;
   margin-top: 0;
-  margin-bottom: 10px;
   text-align: center;
-  position: absolute;
+  position: relative;
 }
 .card-content .xp {
   margin-top: 40px;
+  margin-bottom: 40px;
   font-weight: bold;
+  font-size: 30px;
   color: #1f70c1;
 }
 .card-content .ch3 {
@@ -168,6 +172,18 @@ body {
 
 .card a:hover {
   background-color: #a87419;
+}
+
+.status.yet {
+  background-color: lightgray;
+}
+
+.status.progress {
+  background-color: orange;
+}
+
+.status.complete {
+  background-color: green;
 }
 
 .task-detail {

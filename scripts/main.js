@@ -167,9 +167,8 @@ function renderCards() {
     card.innerHTML = `
       <div class="card-content">
         <div class="ch3">${quest.icon || "📜"} ${quest.title}</div>
-        <br>
-        ${quest.status ? `<div class="status">${quest.status}</div>` : ""}
-        <div class="xp">Reward: +${quest.reward}</div>
+        <div class="xp">+${quest.reward} XP</div>
+        ${quest.status ? `<div class="status ${getStatusClass(quest.status)}">${quest.status}</div>` : ""}
         <div class="card-buttonrow">
               <button class="carddetail-btn" onclick="event.stopPropagation(); showDetail(${index})">
           ✦ Details
@@ -326,4 +325,17 @@ function addQuest() {
   quests.push(newQuest);
   renderCards();
   alert("Quest added successfully!");
+}
+
+function getStatusClass(status) {
+  switch (status) {
+    case "Yet to Embark":
+      return "yet";
+    case "In Progress":
+      return "progress";
+    case "Completed":
+      return "complete";
+    default:
+      return "";
+  }
 }
