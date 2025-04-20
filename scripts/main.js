@@ -101,7 +101,7 @@ function parseQuestText(text) {
 document.getElementById("outputPrompt").addEventListener("input", function () {
   const text = this.value;
 
-const isValid = /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nReward:\s*(\d+)\s*XP(?:\nIcon:\s*(.+))?$/i.test(text.trim());
+const isValid = /^Title:\s*(.+)\nBackstory:\s*((?:.|\n)*?)\nObjective:\s*(.+)\nReward:\s*(\d+)\s*XP\s*(?:\nIcon:\s*(.+))?$/i.test(text.trim());
 
   const error = document.getElementById("formatError");
 
